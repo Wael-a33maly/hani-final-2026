@@ -1,0 +1,5 @@
+/storage/backups/
+/storage/updates/
+/storage/*.zip
+.env
+node_modules/

@@ -1,0 +1,15 @@
+# تشغيل محرك إعادة الكتابة
+RewriteEngine On
+RewriteBase /
+
+# حماية مجلدات النظام
+RewriteRule ^app/ - [F,L]
+RewriteRule ^config\.php - [F,L]
+RewriteRule ^storage/ - [F,L]
+RewriteRule ^database/ - [F,L]
+RewriteRule ^routes/ - [F,L]
+
+# إعادة توجيه جميع الطلبات إلى index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

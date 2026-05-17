@@ -1,0 +1,172 @@
+/* ==============================================
+   استجابة الهواتف المحمولة - تطبيق ERP
+   ============================================== */
+
+/* قاعدة عامة للموبايل (max-width: 768px) */
+@media (max-width: 768px) {
+  /* تباعد أزرار النماذج */
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  
+  /* حقول الإدخال بحجم مناسب للإصبع */
+  input, select, textarea, button {
+    font-size: 16px !important; /* منع zoom التلقائي في iOS */
+  }
+  
+  input, select, textarea {
+    padding: 12px 14px !important;
+  }
+  
+  /* الأزرار تكون بعرض كامل أو تباعد مناسب */
+  .btn, button[type="submit"], a.btn {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+  
+  /* الكروت */
+  .card {
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+  }
+  
+  /* تحويل الجداول إلى كروت (عام) */
+  .table-responsive table,
+  table.mobile-card-view {
+    border: 0;
+  }
+  .table-responsive thead,
+  table.mobile-card-view thead {
+    display: none;
+  }
+  .table-responsive tr,
+  table.mobile-card-view tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: white;
+    padding: 0.5rem;
+  }
+  .table-responsive td,
+  table.mobile-card-view td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-light);
+    text-align: right;
+  }
+  .table-responsive td:last-child,
+  table.mobile-card-view td:last-child {
+    border-bottom: 0;
+  }
+  .table-responsive td::before,
+  table.mobile-card-view td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-left: 1rem;
+  }
+  
+  /* شريط التنقل السفلي (Bottom Navigation Bar) */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 8px 12px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+  }
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
+    font-size: 12px;
+  }
+  .bottom-nav-item i {
+    font-size: 22px;
+    margin-bottom: 2px;
+  }
+  .bottom-nav-item.active {
+    color: var(--primary);
+  }
+  .bottom-nav-item span {
+    font-size: 10px;
+  }
+  
+  /* Bottom Sheet (القائمة المنسدلة من الأسفل) */
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.36, 0.66, 0.04, 1);
+    z-index: 200;
+    max-height: 80vh;
+    overflow-y: auto;
+    visibility: hidden; /* إخفاء تام */
+    pointer-events: none; /* لا يعترض اللمس */
+  }
+  .bottom-sheet.open {
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .bottom-sheet .drag-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    margin: 12px auto;
+  }
+  .bottom-sheet .sheet-content {
+    padding: 0 16px 20px;
+  }
+  
+  /* إخفاء السايدبار جانباً (يتم التحكم به بواسطة Alpine.js) */
+  .sidebar-mobile-hidden {
+    transform: translateX(100%);
+  }
+  
+  /* ضبط الهيدر للموبايل */
+  header {
+    padding: 0 12px;
+  }
+  header h1 {
+    font-size: 1.2rem;
+  }
+  
+  /* شبكات الفلاتر */
+  .filter-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  /* أزرار الإجراءات في الجداول */
+  .action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+  }
+}
+
+/* أجهزة لوحية (بين 768 و 1024) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .bottom-nav {
+    display: none;
+  }
+}

@@ -1,0 +1,120 @@
+/* ==============================================
+   أنماط الطباعة - تطبيق ERP
+   ============================================== */
+
+@media print {
+  /* إخفاء عناصر التطبيق غير الضرورية */
+  .sidebar,
+  .header,
+  nav:not(.print-nav),
+  .no-print,
+  .btn-print,
+  footer,
+  .bottom-nav,
+  .scroll-top-btn,
+  .toast-container,
+  .fixed:not(.print-container) {
+    display: none !important;
+  }
+  
+  /* ضبط الصفحة الأساسية */
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* حاوية الطباعة */
+  .print-container {
+    width: 100%;
+    margin: 0;
+    padding: 0.5cm;
+    box-sizing: border-box;
+  }
+  
+  /* إيصال القسط (مقاس A4 عرض كامل × ثلث ارتفاع) */
+  .receipt-page {
+    width: 210mm;
+    min-height: 99mm; /* ثلث ارتفاع A4 (297/3) */
+    page-break-after: always;
+    padding: 6mm 8mm;
+    border: 0.5pt solid #ccc;
+    margin-bottom: 0.5cm;
+    position: relative;
+  }
+  
+  /* منع تقسيم الكروت أو الجداول عبر الصفحات */
+  .card,
+  .receipt-page,
+  table,
+  tr {
+    page-break-inside: avoid;
+  }
+  
+  /* ألوان للطباعة (تستخدم الحبر/الرصاص) */
+  .text-danger,
+  .text-red-600 {
+    color: #dc2626 !important;
+    font-weight: bold;
+  }
+  
+  .text-success,
+  .text-green-600 {
+    color: #059669 !important;
+  }
+  
+  .badge {
+    border: 0.5pt solid gray;
+    color: black !important;
+    background: none !important;
+  }
+  
+  /* إجبار طباعة الصور والخلفيات (إذا أمكن) */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* الهيدر المطبوع */
+  .print-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+  }
+  
+  .print-header .logo {
+    max-height: 40px;
+  }
+  
+  .print-header .company-details {
+    text-align: center;
+  }
+  
+  .print-footer {
+    border-top: 1px solid #ccc;
+    padding-top: 6px;
+    margin-top: 12px;
+    font-size: 9pt;
+    text-align: center;
+  }
+  
+  /* الجداول في التقارير */
+  table.print-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .print-table th,
+  .print-table td {
+    border: 1px solid #aaa;
+    padding: 6px;
+    text-align: right;
+  }
+  .print-table th {
+    background: #f0f0f0;
+  }
+}
