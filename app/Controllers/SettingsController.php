@@ -39,6 +39,53 @@ class SettingsController extends Controller {
         redirect('/settings');
     }
 
+    // عرض manifest.json الديناميكي لـ PWA
+    public function manifest() {
+        header('Content-Type: application/json');
+        header('Cache-Control: public, max-age=3600');
+
+        $settingsModel = new CompanySetting();
+        $settings = $settingsModel->getSettings();
+
+        $icon192 = rtrim(APP_URL, '/') . '/public/icons/icon-192.svg';
+        $icon512 = rtrim(APP_URL, '/') . '/public/icons/icon-512.svg';
+        $mime = 'image/svg+xml';
+
+        if (!empty($settings['logo_path'])) {
+            $localFile = PUBLIC_PATH . ltrim($settings['logo_path'], '/');
+            if (file_exists($localFile)) {
+                $logoUrl = rtrim(APP_URL, '/') . '/public/' . ltrim($settings['logo_path'], '/');
+                $icon192 = $logoUrl;
+                $icon512 = $logoUrl;
+                $ext = strtolower(pathinfo($localFile, PATHINFO_EXTENSION));
+                $mime = $ext === 'png' ? 'image/png' : ($ext === 'gif' ? 'image/gif' : 'image/jpeg');
+            }
+        }
+
+        $manifest = [
+            'name' => 'Aqsati',
+            'short_name' => 'Aqsati',
+            'description' => 'نظام إدارة المبيعات والأقساط',
+            'start_url' => '/dashboard',
+            'scope' => '/',
+            'display' => 'standalone',
+            'orientation' => 'portrait',
+            'theme_color' => '#2563eb',
+            'background_color' => '#ffffff',
+            'lang' => 'ar',
+            'dir' => 'rtl',
+            'icons' => [
+                ['src' => $icon192, 'sizes' => '192x192', 'type' => $mime, 'purpose' => 'any maskable'],
+                ['src' => $icon512, 'sizes' => '512x512', 'type' => $mime, 'purpose' => 'any maskable'],
+            ],
+            'categories' => ['business', 'finance'],
+            'prefer_related_applications' => false,
+        ];
+
+        echo json_encode($manifest, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        exit;
+    }
+
     // رفع الشعار
     public function uploadLogo() {
         requireRole('admin');
@@ -85,6 +132,17 @@ class SettingsController extends Controller {
 
             $relativePath = 'uploads/logo/' . $filename;
             $settingsModel->updateSettings(['id' => $settings['id'], 'logo_path' => $relativePath]);
+
+            // نسخ الشعار كأيقونة PWA
+            $iconsDir = PUBLIC_PATH . 'icons/';
+            if (!is_dir($iconsDir)) mkdir($iconsDir, 0755, true);
+            $ext = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+            $iconMime = $ext === 'png' ? 'image/png' : ($ext === 'gif' ? 'image/gif' : 'image/jpeg');
+            foreach (['icon-192', 'icon-512'] as $iconName) {
+                $iconPath = $iconsDir . $iconName . '.png';
+                @copy($filepath, $iconPath);
+            }
+
             logAudit($this->userId, 'رفع شعار الشركة', 'company_settings', $settings['id']);
             $_SESSION['success'] = 'تم رفع الشعار بنجاح';
         } else {

@@ -13,6 +13,9 @@ $router->get('/login', 'AuthController@loginForm');
 $router->post('/login', 'AuthController@login');
 $router->get('/logout', 'AuthController@logout');
 
+// ملف manifest الديناميكي لـ PWA
+$router->get('/public/manifest.json', 'SettingsController@manifest');
+
 // الداشبورد (يتطلب تسجيل دخول)
 $router->get('/', 'DashboardController@index');
 $router->get('/dashboard', 'DashboardController@index');
