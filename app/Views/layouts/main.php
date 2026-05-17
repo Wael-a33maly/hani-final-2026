@@ -21,6 +21,11 @@
     } catch (\Throwable $e) {}
     ?>
     <link rel="icon" type="image/svg+xml" href="<?= $faviconUrl ?>">
+    <link rel="manifest" href="<?= rtrim(APP_URL, '/') ?>/public/manifest.json">
+    <link rel="apple-touch-icon" href="<?= rtrim(APP_URL, '/') ?>/public/icons/icon-192.svg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -131,6 +136,14 @@
             moreBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 window.dispatchEvent(new CustomEvent('toggle-mobile-sidebar'));
+            });
+        }
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/public/sw.js');
             });
         }
     </script>

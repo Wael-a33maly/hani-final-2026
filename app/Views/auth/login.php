@@ -19,6 +19,8 @@ if (isset($company) && !empty($company['logo_path'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
     <title><?= APP_NAME ?> - تسجيل الدخول</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%232563eb'/><text x='16' y='23' font-size='20' text-anchor='middle' fill='white' font-family='Arial'>H</text></svg>">
+    <link rel="manifest" href="<?= rtrim(APP_URL, '/') ?>/public/manifest.json">
+    <meta name="theme-color" content="#2563eb">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -286,6 +288,14 @@ if (isset($company) && !empty($company['logo_path'])) {
                     setTimeout(() => this.$el.submit(), 200);
                 }
             }
+        }
+    </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/public/sw.js');
+            });
         }
     </script>
 </body>
